@@ -4,7 +4,7 @@ import torch.nn.functional as F
 
 import math
 
-DEVICE = torch.device('cuda', 1)
+DEVICE = torch.device('cuda') if torch.cuda.is_available else torch.device('cpu')
 DTYPE = torch.float32
 
 ### Scaled dot Product Attention

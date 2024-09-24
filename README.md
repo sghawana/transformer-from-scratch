@@ -8,14 +8,14 @@ This repository provides an implementation of the original transformer encoder-d
 
 ![Transformer Model Architecture](./utils/arc.png)
 
-### **Encoder**
+#### **Encoder**
 
 - The encoder is composed of **stack of identical layers** (typically 6).
 - Each layer contains two main components:
   1. **Multihead Self-Attention Mechanism**
   2. **Position-Wise Fully Connected Feedforward Network**
 
-### **Decoder**
+#### **Decoder**
 
 - The decoder is also composed of **stack of identical layers** (typically 6).
 - Each layer consists of three key components:
@@ -42,7 +42,7 @@ This repository provides an implementation of the original transformer encoder-d
 
 In the transformer architecture, there are three distinct types of attention heads. When used in parallel, these form their respective **Multihead Attention Mechanisms**.
 
-### 1. **Self-Attention (Encoder)**
+#### 1. **Self-Attention (Encoder)**
 
 - Used in the encoder, where all three matrices (Q, K, V) are computed from the same input — either the initial embeddings (in the first layer) or the output of the previous encoder layer (in subsequent layers).
 - The embedding dimension and the dimension of the value vector are the same.
@@ -72,7 +72,7 @@ $$
 
 ---
 
-### 2. **Masked Self-Attention (Decoder)**
+#### 2. **Masked Self-Attention (Decoder)**
 
 - Used in the decoder, it operates similarly to self-attention, but with a crucial modification: the attention scores for any query are set to 0 for key vectors that correspond to future positions in the sequence.
   
@@ -86,9 +86,9 @@ $$
 
 ---
 
-### 3. **Cross-Attention (Decoder)**
+#### 3. **Cross-Attention (Decoder)**
 
-- Cross-attention allows the decoder to focus on relevant parts of the encoder output. Here, the query matrix $\( Q \)$ is derived from the decoder input, while the key $\( K \)$ and value $\( V \)$ matrices are computed from the encoder output.
+- Cross-attention allows the decoder to focus on relevant parts of the encoder output. Here, the query matrix $Q$ is derived from the decoder input, while the key $K$ and value $V$ matrices are computed from the encoder output.
 
 $$
 Q = W_q(\text{Decoder Input}), \quad K = W_k(\text{Encoder Output}), \quad V = W_v(\text{Encoder Output})
@@ -98,3 +98,58 @@ $$
 
 ---
 
+
+## **Usage**
+
+#### 1. Encoder
+```
+my_enc = ENCODER(encoder_dimension, kq_dimension, vocab_size, max_seq_len,
+                  num_heads, linear_stretch, num_layers, padding_index,
+                  use_pos_enc, device, dtype)
+```
+**INPUT**: Tensor of shape $B\ *\ L_{enc}$
+**OUTPUT**: Tensor of shape $B\ *\ L_{enc}\ *\ D_{enc}$
+
+- $B$ is batch size and $L_{enc}$ is sequence Length (if sequence length is variable use padding)
+
+- $D_{enc}$ is encoder dimension
+
+
+#### 2. Decoder
+```
+my_dec = ENCODER(decoder_dimension, encoder_dimension, kq_dimension, vocab_size,
+                 max_seq_len, num_heads, linear_stretch, num_layers, padding_index,
+                 use_pos_enc, dropout, device, dtype)
+```
+**INPUT**: Tensor of shape $B\ *\ L_{dec}$
+**OUTPUT**: Tensor of shape $B\ *\ L_{dec}\ *\ D_{dec}$
+
+- $B$ is batch size and $L_{dec}$ is max sequence Length 
+upto which decoding should take place
+
+- $D_{dec}$ is encoder dimension
+
+---
+#### Args:
+
+- **decoder_dimension:** dimension of embeddings, outputs of all sublayers and value vectors in decoder
+
+- **encoder_dimension:** dimension of embeddings, outputs of all sublayers and value vectors in encoder
+
+- **kq_dimension:** dimension of key and query vectors in attention block
+
+- **vocab_size:** number of unique words in vocabulary
+
+- **num_heads:** number of SDPA heads in each multi head attention block
+
+- **num_layers:** number of layers in decoder/encoder
+
+- **padding_index:** index of pad token used in case of variable length sequences
+
+- **use_pos_enc(bool):** to use sinusoiodal positional encodings alngside the embeddings
+
+- **dropout:** fraction (0-1) of nodes to be turned off in dropout layer
+
+- **dtype:** datatype of tensors used
+
+- **devide:** device on which tensors are stored and calculated

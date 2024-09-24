@@ -30,9 +30,9 @@ This repository provides an implementation of the original transformer encoder-d
 ### **Key Details**
 
 - **Residual connections** are used around each sublayer, followed by **layer normalization**:<br>
-  $$
-  Y = LayerNorm(X + layer(X))
-  $$
+$$
+Y = LayerNorm(X + layer(X))
+$$
 - **Dropout** is applied after each sublayer to avoid overfitting.
 - **Multihead Attention Mechanisms** (Self, Masked, and Cross) utilize several **Scaled Dot-Product Attention (SDPA)** heads (typically 8) in parallel. The outputs of all SDPA heads are concatenated and projected to the desired output dimension.
 

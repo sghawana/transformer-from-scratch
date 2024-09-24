@@ -1,6 +1,6 @@
 # Transformer
 
-This repository provides an implementation of the original transformer encoder-decoder model described in the groundbreaking paper [Attention is All You Need](https://arxiv.org/pdf/1706.03762).
+This repository provides an implementation of the original transformer encoder-decoder model described in the paper [Attention is All You Need](https://arxiv.org/pdf/1706.03762).
 
 ---
 

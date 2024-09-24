@@ -66,9 +66,9 @@ Where:
 $Y = AV$
 And for each query $$\( y_m \)$$:
 
-$$\[
+$$
 y_m = \sum_{i=1}^{n} \text{score}(q_m, k_i) \cdot v_i 
-\]$$
+$$
 
 ---
 
@@ -78,9 +78,9 @@ y_m = \sum_{i=1}^{n} \text{score}(q_m, k_i) \cdot v_i
   
 - In other words:
 
-\[
+$$
 \text{score}(q_i, v_j) = 0 \quad \text{if} \, j > i
-\]
+$$
 
 - This ensures that the attention mechanism only considers past and current tokens, avoiding "peeking" at future tokens. As a result, the attention matrix is **lower triangular**.
 
@@ -88,11 +88,11 @@ y_m = \sum_{i=1}^{n} \text{score}(q_m, k_i) \cdot v_i
 
 ### 3. **Cross-Attention (Decoder)**
 
-- Cross-attention allows the decoder to focus on relevant parts of the encoder output. Here, the query matrix \( Q \) is derived from the decoder input, while the key \( K \) and value \( V \) matrices are computed from the encoder output.
+- Cross-attention allows the decoder to focus on relevant parts of the encoder output. Here, the query matrix $\( Q \)$ is derived from the decoder input, while the key $\( K \)$ and value $\( V \)$ matrices are computed from the encoder output.
 
-\[
+$$
 Q = W_q(\text{Decoder Input}), \quad K = W_k(\text{Encoder Output}), \quad V = W_v(\text{Encoder Output})
-\]
+$$
 
 - The attention mechanism works as usual, attending to the encoder output based on the decoder's current input.
 

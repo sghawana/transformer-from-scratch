@@ -46,8 +46,10 @@ In the transformer architecture, there are three distinct types of attention hea
 
 - Used in the encoder, where all three matrices (Q, K, V) are computed from the same input — either the initial embeddings (in the first layer) or the output of the previous encoder layer (in subsequent layers).
 - The embedding dimension and the dimension of the value vector are the same.
-
+  
+\[
 H = [h_1, h_2, \dots, h_n]
+\]
 \[
 Q = W_qH, \quad K = W_kH, \quad V = W_vH
 \]

@@ -64,7 +64,7 @@ Where:
 
 
 $Y = AV$
-And for each query $$ y_m $$:
+And for each query $y_m$:
 
 $$
 y_m = \sum_{i=1}^{n} \text{score}(q_m, k_i) \cdot v_i 

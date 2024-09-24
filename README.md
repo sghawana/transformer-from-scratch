@@ -60,11 +60,11 @@ $Q = [q_1, q_2, \dots, q_n], \quad K = [k_1, k_2, \dots, k_n], \quad V = [v_1, v
 $A = \text{Softmax}(QK^T)$
 
 Where:
-- $\( A_{ij} = \text{score}(q_i, k_j) \)$
+- $A_{ij} = \text{score}(q_i, k_j) $
 
 
 $Y = AV$
-And for each query $$\( y_m \)$$:
+And for each query $$ y_m $$:
 
 $$
 y_m = \sum_{i=1}^{n} \text{score}(q_m, k_i) \cdot v_i 

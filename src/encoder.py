@@ -6,7 +6,7 @@ from utils import SDPA, MHA, DEVICE, DTYPE
 
 class EncoderLayer(nn.Module):
     def __init__(self, in_dimension, out_dimension, kq_dimension,
-                 num_heads=8, linear_stretch=2,
+                 num_heads=8, linear_stretch=2, dropout=0.1,
                  device=DEVICE, dtype=DTYPE
                 ):
         super(EncoderLayer, self).__init__()
@@ -16,12 +16,13 @@ class EncoderLayer(nn.Module):
         self.kq_dimension = kq_dimension
         self.num_heads = num_heads
         self.linear_stretch = linear_stretch
+        self.dropout = dropout
         
         self.device = device
         self.dtype = dtype
         
         self.mha = MHA(self.in_dimension, self.out_dimension, self.kq_dimension, self.num_heads,
-                       self.device, self.dtype)
+                       device=self.device, dtype=self.dtype)
         
         self.ff1 = nn.Linear(self.out_dimension, self.linear_stretch*self.out_dimension,
                              device=self.device, dtype=self.dtype
@@ -34,16 +35,20 @@ class EncoderLayer(nn.Module):
         self.layernorm1 = nn.LayerNorm(self.out_dimension, device=self.device, dtype=self.dtype)
         self.layernorm2 = nn.LayerNorm(self.out_dimension, device=self.device, dtype=self.dtype)
         
+        self.dropoutL = nn.Dropout(self.dropout)        
+        
     def forward(self, x):
         residual = x
         Y = self.mha(x)
         Y = self.layernorm1(Y + residual) 
+        Y = self.dropoutL(Y)
         
         residual = Y
         Z = self.ff1(Y)
         Z = F.relu(Z)
         Z = self.ff2(Z)
         Z = self.layernorm2(Z + residual)
+        Z = self.dropoutL(Z)
         return Z
     
 

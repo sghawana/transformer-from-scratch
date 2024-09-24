@@ -46,25 +46,25 @@ class DecoderLayer(nn.Module):
         self.layernorm2 = nn.LayerNorm(self.out_dimension, device=self.device, dtype=self.dtype)
         self.layernorm3 = nn.LayerNorm(self.out_dimension, device=self.device, dtype=self.dtype)
         
-        self.dropout = nn.Dropout(dropout)
+        self.dropoutL = nn.Dropout(self.dropout)
         
     def forward(self, x, e):
         residual = x
         Y = self.masked_mha(x)
         Y = self.layernorm1(Y + residual) 
-        Y = self.dropout(Y)
+        Y = self.dropoutL(Y)
         
         residual = Y
         Z = self.cross_mha(e, Y)
         Z = self.layernorm2(Z + residual)
-        Z = self.dropout(Z)
+        Z = self.dropoutL(Z)
         
         residual = Z
         W = self.ff1(Z)
         W = F.relu(W)
         W = self.ff2(W)
         W = self.layernorm3(W + residual)
-        W = self.dropout(W)
+        W = self.dropoutL(W)
         return W
     
 class DECODER(nn.Module):

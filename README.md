@@ -29,7 +29,7 @@ This repository provides an implementation of the original transformer encoder-d
 
 ### **Key Details**
 
-- **Residual connections** are used around each sublayer, followed by **layer normalization**:
+- **Residual connections** are used around each sublayer, followed by **layer normalization**:<br>
   $$
   Y = \text{LayerNorm}(X + \text{layer}(X))
   $$

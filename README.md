@@ -47,25 +47,23 @@ In the transformer architecture, there are three distinct types of attention hea
 - Used in the encoder, where all three matrices (Q, K, V) are computed from the same input — either the initial embeddings (in the first layer) or the output of the previous encoder layer (in subsequent layers).
 - The embedding dimension and the dimension of the value vector are the same.
   
-$$
-H = [h_1, h_2, \dots, h_n]
-$$
-$$
-Q = W_qH, \quad K = W_kH, \quad V = W_vH
-$$
-$$
-Q = [q_1, q_2, \dots, q_n], \quad K = [k_1, k_2, \dots, k_n], \quad V = [v_1, v_2, \dots, v_n]
-$$
 
-$$
-A = \text{Softmax}(QK^T)
-$$
+$H = [h_1, h_2, \dots, h_n]$
+
+
+$Q = W_qH, \quad K = W_kH, \quad V = W_vH$
+
+
+$Q = [q_1, q_2, \dots, q_n], \quad K = [k_1, k_2, \dots, k_n], \quad V = [v_1, v_2, \dots, v_n]$
+
+
+$A = \text{Softmax}(QK^T)$
+
 Where:
-- $$\( A_{ij} = \text{score}(q_i, k_j) \)$$
+- $\( A_{ij} = \text{score}(q_i, k_j) \)$
 
-$$\[
-Y = AV
-\]$$
+
+$Y = AV$
 And for each query $$\( y_m \)$$:
 
 $$\[

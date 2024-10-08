@@ -83,6 +83,7 @@ class DECODER(nn.Module):
         self.num_layers = num_layers
         self.use_pos_enc = use_pos_enc
         self.padding_index = padding_index
+        self.dropout = dropout
         
         self.device = device
         self.dtype = dtype
@@ -122,3 +123,26 @@ class DECODER(nn.Module):
         Y = self.final(Z)
         Y = F.softmax(Y, dim=-1)
         return Y
+    
+'''    
+
+### Sample output check
+
+dec = DECODER(decoder_dimension=512, encoder_dimension=512,
+              kq_dimension=512, vocab_size=1000, max_seq_len=30)
+
+# encoder outputs: BxLxd
+# B: batch dimension
+# L: encoder sequence length
+# d: encoder dimension
+enc_out = torch.rand((100, 50, 512), device=DEVICE)
+
+# decoder input tokens: BXL
+# B: Batch dimension
+# L: decoder sequence length
+dec_inp = torch.randint(0, 999, (100, 1), device=DEVICE)
+
+dec_out = dec.forward(dec_inp, enc_out)
+print(f'{dec_out.shape=}')
+
+'''

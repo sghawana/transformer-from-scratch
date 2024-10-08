@@ -101,3 +101,19 @@ class ENCODER(nn.Module):
         for layer in self.layer_list:
             Z = layer(Z)
         return Z
+    
+'''
+### Sample output check
+
+enc = ENCODER(encoder_dimension=512, kq_dimension=512, vocab_size=1000, seq_len=30)
+
+# encoder input tokens: BXL
+# B: Batch dimension
+# L: encoder sequence length
+enc_inp = torch.randint(0, 999, (100, 1), device=DEVICE)
+
+enc_out = enc.forward(enc_inp)
+print(f'{enc_out.shape=}')
+
+'''
+
